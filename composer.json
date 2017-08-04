@@ -1,0 +1,32 @@
+{
+  "name": "integrated/poll-bundle",
+  "type": "symfony-bundle",
+  "description": "Integrated Poll Bundle",
+  "keywords": ["Integrated", "poll"],
+  "homepage": "http://www.e-active.nl",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "e-Active",
+      "homepage": "http://www.e-active.nl"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "php": ">=5.4",
+    "ext-mongo": "~1.2",
+    "symfony/symfony": "~2.7",
+    "sensio/framework-extra-bundle": "~3.0",
+    "doctrine/mongodb": "~1.3",
+    "doctrine/mongodb-odm": "~1.1.2",
+    "doctrine/mongodb-odm-bundle": "~3.2",
+    "integrated/content-bundle": "~0.7",
+    "integrated/website-bundle": "~0.7"
+  },
+  "autoload":{
+    "psr-4":{
+      "Integrated\\Bundle\\PollBundle\\": ""
+    }
+  }
+}
