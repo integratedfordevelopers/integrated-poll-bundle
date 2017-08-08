@@ -11,8 +11,6 @@
 
 namespace Integrated\Bundle\PollBundle\Document;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-
 use Integrated\Bundle\ContentBundle\Document\Content\Content;
 use Integrated\Common\Form\Mapping\Annotations as Type;
 
@@ -31,7 +29,6 @@ class Poll extends Content
 
     /**
      * @var string
-     * @ODM\Hash
      * @Type\Field(
      *      type="Braincrafted\Bundle\BootstrapBundle\Form\Type\BootstrapCollectionType",
      *      options={
