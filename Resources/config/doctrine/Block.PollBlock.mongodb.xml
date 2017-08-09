@@ -3,11 +3,10 @@
                         xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
                     http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
-    <document name="Integrated\Bundle\PollBundle\Document\Poll">
+    <document name="Integrated\Bundle\PollBundle\Document\Block\PollBlock">
 
-        <field fieldName="title" type="string" />
-
-        <embed-many field="options" target-document="Integrated\Bundle\PollBundle\Document\Embedded\Option" />
+        <field name="publishedTitle" type="string" />
+        <field name="useTitle" type="boolean" />
 
     </document>
 
