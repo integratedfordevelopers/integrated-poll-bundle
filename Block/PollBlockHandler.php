@@ -16,7 +16,6 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Integrated\Bundle\PollBundle\Document\Block\PollBlock;
 use Integrated\Bundle\PollBundle\Document\Poll;
 use Integrated\Bundle\PollBundle\Form\Type\PollType;
-
 use Integrated\Bundle\BlockBundle\Block\BlockHandler;
 use Integrated\Common\Block\BlockInterface;
 
@@ -78,35 +77,36 @@ class PollBlockHandler extends BlockHandler
             return;
         }
 
-        $content = $this->getItem();
+        $content = $this->documentManager->getRepository(Poll::class)->findLatestPoll();
 
         $form = $this->createForm($content);
 
-        $response = new Response();
         if ($request->isMethod('post')) {
             $form->handleRequest($request);
 
             if ($form->isValid()) {
                 $data = $form->getData();
 
-                $content->updateCount($data['options']);
-
-                $this->documentManager->flush($content);
-
                 $cookie = new Cookie($content->getId(), $data['options'], time() + 3600 * 24 * 7);
+
+                $response = new Response();
                 $response->headers->setCookie($cookie);
                 $response->prepare($request);
                 $response->sendHeaders();
+
+                if (!$request->cookies->has($content->getId())) {
+                    $content->updateCount($data['options']);
+
+                    $this->documentManager->flush($content);
+                }
             }
         }
 
-
-
         return $this->render([
-                'block' => $block,
-                'form' => $form->createView(),
-                'content' => $content
-            ]);
+            'block' => $block,
+            'form' => $form->createView(),
+            'content' => $content
+        ]);
     }
 
     /**
@@ -115,19 +115,8 @@ class PollBlockHandler extends BlockHandler
      */
     protected function createForm(Poll $poll)
     {
-        $form = $this->formFactory->createBuilder(PollType::class, null, ['method' => 'post', 'poll' => $poll]);
+        $form = $this->formFactory->createBuilder(PollType::class, null, ['poll' => $poll]);
 
         return $form->getForm();
-    }
-
-    /**
-     * @return array|null|Poll
-     */
-    public function getItem()
-    {
-        return $this->documentManager->createQueryBuilder(Poll::class)
-            ->sort('createdAt', 'DESC')
-            ->getQuery()
-            ->getSingleResult();
     }
 }

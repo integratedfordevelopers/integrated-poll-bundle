@@ -3,7 +3,7 @@
                         xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
                     http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
-    <document name="Integrated\Bundle\PollBundle\Document\Poll">
+    <document name="Integrated\Bundle\PollBundle\Document\Poll" repository-class="Integrated\Bundle\PollBundle\Document\PollRepository">
 
         <field fieldName="title" type="string" />
 

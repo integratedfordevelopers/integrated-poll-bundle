@@ -29,7 +29,7 @@ class Poll extends Content
     protected $title;
 
     /**
-     * @var array
+     * @var Option[]
      * @Type\Field(
      *      type="Braincrafted\Bundle\BootstrapBundle\Form\Type\BootstrapCollectionType",
      *      options={
@@ -64,7 +64,7 @@ class Poll extends Content
     }
 
     /**
-     * @return array
+     * @return Option[]
      */
     public function getOptions()
     {
@@ -72,7 +72,7 @@ class Poll extends Content
     }
 
     /**
-     * @param array $options
+     * @param Option[] $options
      * @return $this
      */
     public function setOptions(array $options = [])
@@ -82,11 +82,10 @@ class Poll extends Content
     }
 
     /**
-     * @param $name
+     * @param string $name
      */
     public function updateCount($name)
     {
-        /** @var Option $option */
         foreach ($this->options as $option) {
             if ($option->getName() == $name) {
                 $option->incrementCount();
@@ -100,7 +99,6 @@ class Poll extends Content
     public function totalCount()
     {
         $cnt = 0;
-        /** @var Option $option */
         foreach ($this->options as $option) {
             $cnt += $option->getCount();
         }

@@ -33,14 +33,11 @@ class PollType extends AbstractType
         $poll = $options['poll'];
 
         $choices = [];
-        /** @var Option $option */
         foreach ($poll->getOptions() as $option) {
             $choices[$option->getName()] = $option->getName();
         }
 
-        $choices = array_filter($choices, function ($value) {
-            return $value !== null;
-        });
+        $choices = array_filter($choices);
 
         $builder->add(
             'options',
