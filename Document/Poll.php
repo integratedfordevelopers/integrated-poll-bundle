@@ -12,6 +12,7 @@
 namespace Integrated\Bundle\PollBundle\Document;
 
 use Integrated\Bundle\ContentBundle\Document\Content\Content;
+use Integrated\Bundle\PollBundle\Document\Embedded\Option;
 use Integrated\Common\Form\Mapping\Annotations as Type;
 
 /**
@@ -28,13 +29,17 @@ class Poll extends Content
     protected $title;
 
     /**
-     * @var string
+     * @var Option[]
      * @Type\Field(
      *      type="Braincrafted\Bundle\BootstrapBundle\Form\Type\BootstrapCollectionType",
      *      options={
      *          "allow_add"=true,
      *          "allow_delete"=true,
      *          "required"=false,
+     *          "type" = "Integrated\Bundle\PollBundle\Form\Type\Embedded\OptionType",
+     *          "options"={
+     *              "data_class"="Integrated\Bundle\PollBundle\Document\Embedded\Option"
+     *          },
      *      }
      * )
      */
@@ -59,7 +64,7 @@ class Poll extends Content
     }
 
     /**
-     * @return array
+     * @return Option[]
      */
     public function getOptions()
     {
@@ -67,13 +72,38 @@ class Poll extends Content
     }
 
     /**
-     * @param array $options
+     * @param Option[] $options
      * @return $this
      */
     public function setOptions(array $options = [])
     {
         $this->options = $options;
         return $this;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function updateCount($name)
+    {
+        foreach ($this->options as $option) {
+            if ($option->getName() == $name) {
+                $option->incrementCount();
+            }
+        }
+    }
+
+    /**
+     * @return int
+     */
+    public function totalCount()
+    {
+        $cnt = 0;
+        foreach ($this->options as $option) {
+            $cnt += $option->getCount();
+        }
+
+        return $cnt;
     }
 
     /**

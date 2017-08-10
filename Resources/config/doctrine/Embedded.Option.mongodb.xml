@@ -3,12 +3,11 @@
                         xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
                     http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
-    <document name="Integrated\Bundle\PollBundle\Document\Poll" repository-class="Integrated\Bundle\PollBundle\Document\PollRepository">
+    <embedded-document name="Integrated\Bundle\PollBundle\Document\Embedded\Option">
 
-        <field fieldName="title" type="string" />
+        <field fieldName="name" type="string" />
+        <field fieldName="count" type="int" />
 
-        <embed-many field="options" target-document="Integrated\Bundle\PollBundle\Document\Embedded\Option" />
-
-    </document>
+    </embedded-document>
 
 </doctrine-mongo-mapping>
