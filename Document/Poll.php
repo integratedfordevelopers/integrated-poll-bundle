@@ -46,6 +46,11 @@ class Poll extends Content
     protected $options = [];
 
     /**
+     * @var bool
+     */
+    protected $voted = false;
+
+    /**
      * @return string
      */
     public function getTitle()
@@ -96,7 +101,7 @@ class Poll extends Content
     /**
      * @return int
      */
-    public function totalCount()
+    public function getTotalCount()
     {
         $cnt = 0;
         foreach ($this->options as $option) {
@@ -104,6 +109,24 @@ class Poll extends Content
         }
 
         return $cnt;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isVoted()
+    {
+        return $this->voted;
+    }
+
+    /**
+     * @param bool $voted
+     * @return $this
+     */
+    public function setVoted($voted = true)
+    {
+        $this->voted = $voted;
+        return $this;
     }
 
     /**

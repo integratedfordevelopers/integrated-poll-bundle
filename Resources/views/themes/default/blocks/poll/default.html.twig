@@ -1,0 +1,45 @@
+<div class="panel panel-default">
+    {% if poll.title %}
+        <div class="panel-heading">
+            {{ poll.title }}
+        </div>
+    {% endif %}
+
+    <div class="panel-body">
+        {% if form.vars.submitted and form.vars.valid or poll.voted %}
+            {% for option in poll.options if option.name %}
+                {% set width = 0 %}
+                {% set count = option.count %}
+
+                {% if count > 0 %}
+                    {% set width = (100 / poll.totalCount) * count %}
+                {% endif %}
+
+                <b>{{ option.name }}</b>
+                <span class="pull-right">
+                    {% transchoice count %}{0}No votes|{1}1 vote|]1,Inf[%count% votes{% endtranschoice %}
+                </span>
+
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="{{ width }}" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: {{ width }}%;">
+                        {{ width|round }}%
+                    </div>
+                </div>
+            {% endfor %}
+
+            {% trans %}Total votes{% endtrans %}: {{ poll.totalCount }}
+        {% else %}
+            {{ form(form, {
+                'style': 'horizontal',
+                'label_col': 3,
+                'widget_col': 9,
+                'col_size': 'sm',
+                'attr': {
+                    'class': 'poll-form',
+                    'name': form.vars.id,
+                    'onchange': 'document.' ~ form.vars.id ~ '.submit()'
+                }
+            }) }}
+        {% endif %}
+    </div>
+</div>

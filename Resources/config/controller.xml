@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+
+        <parameter key="integrated_poll.controller.content_type.poll.class">Integrated\Bundle\PollBundle\Document\Poll</parameter>
+
+        <parameter key="integrated_poll.controller.content.poll.class">Integrated\Bundle\PollBundle\Controller\Content\PollController</parameter>
+
+    </parameters>
+
+    <services>
+
+        <service id="integrated_poll.controller.content.poll" class="%integrated_poll.controller.content.poll.class%">
+            <argument type="service" id="templating" />
+            <argument type="service" id="integrated_theme.templating.theme_manager" />
+            <argument type="service" id="integrated_block.templating.block_manager" />
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="doctrine_mongodb.odm.document_manager" />
+            <argument type="service" id="integrated_poll.event_dispatcher" />
+            <tag name="integrated_page.contenttype_controller" class="%integrated_poll.controller.content_type.poll.class%" />
+        </service>
+
+    </services>
+</container>

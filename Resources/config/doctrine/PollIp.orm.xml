@@ -1,0 +1,14 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="Integrated\Bundle\PollBundle\Entity\PollIp" table="poll_ip">
+
+        <id name="poll" type="string" column="poll" length="32" />
+        <id name="ip" type="ip" column="ip" />
+
+        <field name="count" type="integer" column="count" />
+
+    </entity>
+
+</doctrine-mapping>
