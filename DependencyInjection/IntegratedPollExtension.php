@@ -34,6 +34,8 @@ class IntegratedPollExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         $loader->load('block.xml');
+        $loader->load('controller.xml');
+        $loader->load('event.xml');
         $loader->load('form.xml');
     }
 }

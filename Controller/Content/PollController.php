@@ -9,29 +9,42 @@
  * file that was distributed with this source code.
  */
 
-namespace Integrated\Bundle\PollBundle\Block;
+namespace Integrated\Bundle\PollBundle\Controller\Content;
 
-use Doctrine\ODM\MongoDB\DocumentManager;
-
-use Integrated\Bundle\PollBundle\Document\Block\PollBlock;
-use Integrated\Bundle\PollBundle\Document\Poll;
-use Integrated\Bundle\PollBundle\Event\PollEvent;
-use Integrated\Bundle\PollBundle\Form\Type\PollType;
-use Integrated\Bundle\BlockBundle\Block\BlockHandler;
-use Integrated\Common\Block\BlockInterface;
-
+use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
+
+use Doctrine\ODM\MongoDB\DocumentManager;
+
+use Integrated\Bundle\BlockBundle\Templating\BlockManager;
+use Integrated\Bundle\ThemeBundle\Templating\ThemeManager;
+use Integrated\Bundle\PageBundle\Document\Page\ContentTypePage;
+use Integrated\Bundle\PollBundle\Form\Type\PollType;
+use Integrated\Bundle\PollBundle\Event\PollEvent;
+use Integrated\Bundle\PollBundle\Document\Poll;
 
 /**
- * Poll block handler
- *
- * @author Michael Jongman <michael@e-active.nl>
+ * @author Ger Jan van den Bosch <gerjan@e-active.nl>
  */
-class PollBlockHandler extends BlockHandler
+class PollController
 {
+    /**
+     * @var TwigEngine
+     */
+    protected $templating;
+
+    /**
+     * @var ThemeManager
+     */
+    protected $themeManager;
+
+    /**
+     * @var BlockManager
+     */
+    protected $blockManager;
+
     /**
      * @var FormFactory
      */
@@ -43,53 +56,42 @@ class PollBlockHandler extends BlockHandler
     protected $documentManager;
 
     /**
-     * @var RequestStack
-     */
-    protected $requestStack;
-
-    /**
      * @var EventDispatcher
      */
     protected $eventDispatcher;
 
     /**
-     * @param FormFactory $formFactory
+     * @param TwigEngine $templating
+     * @param ThemeManager $themeManager
+     * @param BlockManager $blockManager
      * @param DocumentManager $documentManager
-     * @param RequestStack $requestStack
      * @param EventDispatcher $eventDispatcher
      */
     public function __construct(
+        TwigEngine $templating,
+        ThemeManager $themeManager,
+        BlockManager $blockManager,
         FormFactory $formFactory,
         DocumentManager $documentManager,
-        RequestStack $requestStack,
         EventDispatcher $eventDispatcher
     ) {
+        $this->templating = $templating;
+        $this->themeManager = $themeManager;
+        $this->blockManager = $blockManager;
         $this->formFactory = $formFactory;
         $this->documentManager = $documentManager;
-        $this->requestStack = $requestStack;
         $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
-     * {@inheritdoc}
+     * @param ContentTypePage $page
+     * @param Poll $poll
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function execute(BlockInterface $block, array $options)
+    public function showAction(ContentTypePage $page, Poll $poll, Request $request)
     {
-        if (!$block instanceof PollBlock) {
-            return;
-        }
-
-        $request = $this->requestStack->getCurrentRequest();
-
-        if (!$request instanceof Request) {
-            return;
-        }
-
-        $poll = $this->documentManager->getRepository(Poll::class)->findLatestPoll();
-
-        if (!$poll instanceof Poll) {
-            return;
-        }
+        $this->blockManager->setDocument($poll);
 
         $form = $this->createForm($poll);
 
@@ -104,11 +106,14 @@ class PollBlockHandler extends BlockHandler
             }
         }
 
-        return $this->render([
-            'block' => $block,
-            'form'  => $form->createView(),
-            'poll'  => $poll
-        ]);
+        return $this->templating->renderResponse(
+            $this->themeManager->locateTemplate('content/Poll/show/' . $page->getLayout()),
+            [
+                'page' => $page,
+                'form' => $form->createView(),
+                'poll' => $poll,
+            ]
+        );
     }
 
     /**
