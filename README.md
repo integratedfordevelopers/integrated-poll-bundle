@@ -34,6 +34,14 @@ This bundle can be installed following these steps:
     # app/config/routing.yml
     integrated_poll:
         resource: @IntegratedPollBundle/Resources/config/routing.xml
+        
+### Doctrine Configuration ###
+        
+    # app/config/config.yml
+    doctrine:
+        dbal:
+            types:
+                ip: Darsyn\IP\Doctrine\IpType
 
 ## License ##
 This bundle is under the MIT license. See the complete license in the bundle:
