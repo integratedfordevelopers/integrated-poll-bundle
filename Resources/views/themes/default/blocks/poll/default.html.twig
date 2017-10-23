@@ -16,9 +16,11 @@
                 {% endif %}
 
                 <b>{{ option.name }}</b>
-                <span class="pull-right">
-                    {% transchoice count %}{0}No votes|{1}1 vote|]1,Inf[%count% votes{% endtranschoice %}
-                </span>
+                {% if block.showVotes|default(false) %}
+                    <span class="pull-right">
+                        {% transchoice count %}{0}No votes|{1}1 vote|]1,Inf[%count% votes{% endtranschoice %}
+                    </span>
+                {% endif %}
 
                 <div class="progress">
                     <div class="progress-bar" role="progressbar" aria-valuenow="{{ width }}" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: {{ width }}%;">
@@ -27,7 +29,9 @@
                 </div>
             {% endfor %}
 
-            {% trans %}Total votes{% endtrans %}: {{ poll.totalCount }}
+            {% if block.showVotes|default(false) %}
+                {% trans %}Total votes{% endtrans %}: {{ poll.totalCount }}
+            {% endif %}
         {% else %}
             {{ form(form, {
                 'style': 'horizontal',
