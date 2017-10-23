@@ -40,6 +40,36 @@ class PollBlock extends Block
     protected $title;
 
     /**
+     * @var bool
+     * @Type\Field(
+     *      type="Symfony\Component\Form\Extension\Core\Type\CheckboxType",
+     *      options={
+     *          "required"=false,
+     *          "attr"={"align_with_widget"=true}
+     *      }
+     * )
+     */
+    protected $showVotes = false;
+
+    /**
+     * @return bool
+     */
+    public function isShowVotes()
+    {
+        return $this->showVotes;
+    }
+
+    /**
+     * @param bool $showVotes
+     * @return $this
+     */
+    public function setShowVotes($showVotes)
+    {
+        $this->showVotes = $showVotes;
+        return $this;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getType()
