@@ -54,7 +54,7 @@ class PollBlock extends Block
     /**
      * @return bool
      */
-    public function getShowVotes()
+    public function isShowVotes()
     {
         return $this->showVotes;
     }
