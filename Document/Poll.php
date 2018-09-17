@@ -36,8 +36,8 @@ class Poll extends Content
      *          "allow_add"=true,
      *          "allow_delete"=true,
      *          "required"=false,
-     *          "type" = "Integrated\Bundle\PollBundle\Form\Type\Embedded\OptionType",
-     *          "options"={
+     *          "entry_type"="Integrated\Bundle\PollBundle\Form\Type\Embedded\OptionType",
+     *          "entry_options"={
      *              "data_class"="Integrated\Bundle\PollBundle\Document\Embedded\Option"
      *          },
      *      }

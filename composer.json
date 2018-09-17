@@ -28,5 +28,10 @@
         "psr-4":{
             "Integrated\\Bundle\\PollBundle\\": ""
         }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-release/0.9": "0.9-dev"
+        }
     }
 }
