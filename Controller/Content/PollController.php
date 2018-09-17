@@ -107,7 +107,7 @@ class PollController
         }
 
         return $this->templating->renderResponse(
-            $this->themeManager->locateTemplate('content/Poll/show/' . $page->getLayout()),
+            $this->themeManager->locateTemplate('content/poll/show/' . $page->getLayout()),
             [
                 'page' => $page,
                 'form' => $form->createView(),
