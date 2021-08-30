@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 use Doctrine\ORM\EntityManager;
-use Darsyn\IP\IP;
+use Darsyn\IP\Version\Multi as IP;
 
 use Integrated\Bundle\PollBundle\Event\PollEvent;
 use Integrated\Bundle\PollBundle\Entity\PollIp;
@@ -115,7 +115,7 @@ class PollIpSubscriber implements EventSubscriberInterface
      */
     protected function getLog($poll, $ip, $create = false)
     {
-        $ip = new IP($ip);
+        $ip = IP::factory($ip);
 
         if (!$log = $this->entityManager->getRepository(PollIp::class)->findOneBy(['poll' => $poll, 'ip' => $ip])) {
             if ($create) {

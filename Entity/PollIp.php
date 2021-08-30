@@ -11,7 +11,7 @@
 
 namespace Integrated\Bundle\PollBundle\Entity;
 
-use Darsyn\IP\IP;
+use Darsyn\IP\Version\Multi as IP;
 
 /**
  * @author Ger Jan van den Bosch <gerjan@e-active.nl>

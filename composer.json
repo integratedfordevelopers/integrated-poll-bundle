@@ -15,11 +15,11 @@
     "prefer-stable": true,
     "require": {
         "php": ">=7.1",
-        "darsyn/ip": "^3.3",
+        "darsyn/ip": "^4.0",
         "symfony/symfony": "~3.4",
         "sensio/framework-extra-bundle": "~5.0",
         "doctrine/mongodb-odm-bundle": "~3.4",
-        "integrated/integrated": "~0.8"
+        "integrated/integrated": "~0.14"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.1"
