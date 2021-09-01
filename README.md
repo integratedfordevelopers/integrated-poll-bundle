@@ -15,7 +15,7 @@ This bundle can be installed following these steps:
 
 ### Install using composer ###
 
-    $ php composer.phar require integrated/poll-bundle:~0.7
+    $ php composer.phar require integrated/poll-bundle:~0.15
 
 ### Enable the bundle ###
 
@@ -41,7 +41,7 @@ This bundle can be installed following these steps:
     doctrine:
         dbal:
             types:
-                ip: Darsyn\IP\Doctrine\IpType
+                ip: Darsyn\IP\Doctrine\MultiType
 
 ## License ##
 This bundle is under the MIT license. See the complete license in the bundle:
