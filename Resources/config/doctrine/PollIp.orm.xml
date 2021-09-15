@@ -3,12 +3,18 @@
     xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
     <entity name="Integrated\Bundle\PollBundle\Entity\PollIp" table="poll_ip">
+        <id name="id" column="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
 
-        <id name="poll" type="string" column="poll" length="32" />
-        <id name="ip" type="ip" column="ip" />
+        <field name="poll" type="string" column="poll" length="32" />
+        <field name="ip" type="ip" column="ip" />
 
         <field name="count" type="integer" column="count" />
 
+        <unique-constraints>
+            <unique-constraint columns="poll,ip"/>
+        </unique-constraints>
     </entity>
 
 </doctrine-mapping>

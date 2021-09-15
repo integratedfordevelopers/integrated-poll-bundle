@@ -1,2 +1,0 @@
-script:
-- vendor/bin/phpcs . --ignore=*/vendor/* --standard=PSR2 --extensions=php

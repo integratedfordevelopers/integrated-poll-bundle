@@ -19,6 +19,11 @@ use Darsyn\IP\Version\Multi as IP;
 class PollIp
 {
     /**
+     * @var null|string
+     */
+    protected $id = null;
+
+    /**
      * @var string
      */
     protected $poll;
@@ -32,6 +37,14 @@ class PollIp
      * @var int
      */
     protected $count = 0;
+
+    /**
+     * @return string|null
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * @return string
